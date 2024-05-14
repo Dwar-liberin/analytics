@@ -72,11 +72,7 @@ var Analytics = /** @class */ (function () {
                         };
                         return [4 /*yield*/, fetch(this.analyticsServerUrl, {
                                 method: "POST",
-                                mode: "no-cors",
-                                credentials: "include",
-                                headers: {
-                                    "Content-Type": "application/json", // Specify JSON content type
-                                },
+                                headers: new Headers({ "Content-Type": "application/json" }),
                                 body: JSON.stringify(body),
                             })];
                     case 1:
