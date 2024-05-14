@@ -241,10 +241,12 @@ var Analytics = /** @class */ (function () {
     };
     Analytics.prototype.sendQueryParam = function () {
         var query = this.getQueryParam();
-        this.sendDataToAnalyticsServer({
-            type: EventType.QUERY_PARAM,
-            payload: query,
-        });
+        for (var q in query) {
+            this.sendDataToAnalyticsServer({
+                type: EventType.QUERY_PARAM,
+                payload: query[q],
+            });
+        }
     };
     Analytics.prototype.sendBrowserInfo = function () {
         var browserInfo = this.getBrowserInfo();
