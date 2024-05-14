@@ -62,7 +62,12 @@ var Analytics = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 6]);
+                        if (!Analytics.active) {
+                            return [2 /*return*/, false];
+                        }
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 7]);
                         body = {
                             appName: this.appName,
                             customerId: this.customerId,
@@ -75,26 +80,26 @@ var Analytics = /** @class */ (function () {
                                 headers: new Headers({ "Content-Type": "application/json" }),
                                 body: JSON.stringify(body),
                             })];
-                    case 1:
+                    case 2:
                         serverResponse = _a.sent();
                         if (serverResponse.ok) {
                             console.log("Server response send");
                             return [2 /*return*/, true];
                         }
-                        return [3 /*break*/, 6];
-                    case 2:
+                        return [3 /*break*/, 7];
+                    case 3:
                         error_1 = _a.sent();
-                        if (!(retries < this.MAX_RETRY)) return [3 /*break*/, 4];
+                        if (!(retries < this.MAX_RETRY)) return [3 /*break*/, 5];
                         console.log("Error sending data to analytics server. Retrying... Attempt ".concat(retries + 1));
                         return [4 /*yield*/, this.sendDataToAnalyticsServer(event, retries + 1)];
-                    case 3:
-                        _a.sent();
-                        return [3 /*break*/, 5];
                     case 4:
+                        _a.sent();
+                        return [3 /*break*/, 6];
+                    case 5:
                         console.error("Max retries reached. Unable to send data to analytics server.");
-                        _a.label = 5;
-                    case 5: return [3 /*break*/, 6];
-                    case 6: return [2 /*return*/];
+                        _a.label = 6;
+                    case 6: return [3 /*break*/, 7];
+                    case 7: return [2 /*return*/];
                 }
             });
         });
@@ -295,8 +300,10 @@ var Analytics = /** @class */ (function () {
             payload: event.payload,
         });
     };
+    Analytics.active = true;
     return Analytics;
 }());
+Analytics.active = false;
 //
 // const analytics = new Analytics({
 //   appName: "Dwar",
